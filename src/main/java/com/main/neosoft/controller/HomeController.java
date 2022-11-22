@@ -3,6 +3,8 @@ package com.main.neosoft.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -37,7 +39,7 @@ public class HomeController {
 	UserCredentialsRepository userCredRepo;
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> registerUser (@RequestBody UserDetails ud) {
+	public ResponseEntity<?> registerUser (@Valid @RequestBody UserDetails ud) {
 		
 		if (userDetailsRepo.existsByEmail(ud.getEmail())) {
 			return new ResponseEntity<>("Email is already exists!", HttpStatus.BAD_REQUEST);
@@ -93,7 +95,7 @@ public class HomeController {
 	}
 	
 	@PutMapping("/user/{userId}")
-	public ResponseEntity<UserDetails> updateUser (@PathVariable("userId") Long id, @RequestBody UserDetails ud) {
+	public ResponseEntity<UserDetails> updateUser (@PathVariable("userId") Long id, @Valid @RequestBody UserDetails ud) {
 		UserDetails userDetails = userDetailsRepo.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("User Not Found with id = " +id));
 		

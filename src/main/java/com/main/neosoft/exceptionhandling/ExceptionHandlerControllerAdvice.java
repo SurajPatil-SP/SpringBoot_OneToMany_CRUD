@@ -2,7 +2,10 @@ package com.main.neosoft.exceptionhandling;
 
 import java.util.Date;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -32,5 +35,19 @@ public class ExceptionHandlerControllerAdvice {
 		 error.setDescription(request.getDescription(false));
 		 return error;
 	}
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	protected ExceptionResponse handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
+			 WebRequest request) {
+		 ExceptionResponse error = new ExceptionResponse();
+		 error.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		 error.setTimestamp(new Date());
+		 error.setMessage(exception.getBindingResult().getFieldError().getDefaultMessage());
+		 error.setDescription(request.getDescription(false));
+		 return error;
+	}
+		
+	
 
 }
