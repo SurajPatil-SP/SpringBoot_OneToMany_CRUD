@@ -8,11 +8,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.main.neosoft.entity.UserCredentials;
 
-
 public class CustomUserDetailsServiceImpl implements UserDetails {
 
 	private UserCredentials userCredentials;
-	
+
 	public CustomUserDetailsServiceImpl(UserCredentials userCredentials) {
 		super();
 		this.userCredentials = userCredentials;
