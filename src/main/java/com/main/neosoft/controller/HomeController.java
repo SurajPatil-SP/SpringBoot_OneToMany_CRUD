@@ -3,7 +3,6 @@ package com.main.neosoft.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.main.neosoft.entity.UserContactDetails;
 import com.main.neosoft.entity.UserCredentials;
 import com.main.neosoft.entity.UserDetails;
-import com.main.neosoft.exceptionhandling.MobileNumberFormatException;
 import com.main.neosoft.exceptionhandling.PasswordInvalidException;
 import com.main.neosoft.exceptionhandling.ResourceNotFoundException;
 import com.main.neosoft.repository.UserContactDetailsRepository;
@@ -53,6 +50,13 @@ public class HomeController {
 				userDetails.getEmail())) {
 			return new ResponseEntity<>("User is already exists!", HttpStatus.BAD_REQUEST);
 		}
+		
+//		List<UserDetails> users = userDetailsRepo.findAll();
+//		for (UserDetails user:users) {
+//			if (user.equals(userDetails)) {
+//				return new ResponseEntity<>("User is already exists!", HttpStatus.BAD_REQUEST);
+//			}
+//		}
 
 		if (userDetailsRepo.existsByEmail(userDetails.getEmail())) {
 			return new ResponseEntity<>("Email is already exists!", HttpStatus.BAD_REQUEST);
